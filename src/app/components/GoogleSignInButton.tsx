@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/app/components/ui/button';
 import { authClient } from "@/lib/auth-client"; //import the auth client
  
 

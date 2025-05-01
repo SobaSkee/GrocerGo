@@ -1,5 +1,5 @@
 import React from 'react'
-import SignInForm from '@/components/SignInForm'
+import SignInForm from '@/app/components/SignInForm'
 function page() {
   return (
     <div className='min-h-screen'>

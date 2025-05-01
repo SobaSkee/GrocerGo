@@ -1,10 +1,14 @@
 "use client";
-
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import { Form, FormControl, FormField, FormItem, FormMessage, FormLabel} from "@/components/ui/form";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  FormLabel,
+} from "@/app/components/ui/form";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -12,49 +16,46 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
 import signUpImage from "@/../public/images/sign-up-image.png";
-
-const FormSchema = z
-  .object({
-    username: z.string().min(1, "Username is required").max(100),
-    email: z.string().min(1, "Email is required").email("Invalid email").refine((val) => val.endsWith("@ufl.edu"), {message: "Email must be a @ufl.edu email"}),
-    password: z.string().min(8, "Password must have 8 or more characters"),
-    confirmPassword: z.string().min(8, "Password confirmation is required"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+import { signUp } from "@/lib/auth-client";
+import { formSchema } from "@/lib/auth-schema";
+import { toast } from "sonner";
 
 export default function SignUpForm() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const { email, password, name } = values;
+    // sign up with credentials
+    signUp.email(
+      {
+        email,
+        password,
+        name,
       },
-      body: JSON.stringify({
-        username: values.username,
-        email: values.email,
-        password: values.password,
-      }),
-    });
+      {
+        onRequest: () => {
+          toast("Please wait...");
+        },
+        onSuccess: () => {
+          toast("Sign-up successful!");
+          router.push("/order");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+          form.setError("email", { message: ctx.error.message });
+        },
+      }
+    );
 
-    if (response.ok) {
-      router.push("/sign-in");
-    } else {
-      console.error("Error creating user", response.statusText);
-    }
   };
 
   return (
@@ -68,16 +69,16 @@ export default function SignUpForm() {
             <div className="text-center flex flex-col items-center justify-center gap-4">
               <h1 className="text-3xl font-bold">Sign up to GrocerGO</h1>
               <div className="border p-2 rounded-md text-lg text-black/80">
-            <span className="text-[#F76129]">Note:</span> GrocerGO is currently
-            only available to University of Florida students with a valid ufl
-            email.
-          </div>
+                <span className="text-[#F76129]">Note:</span> GrocerGO is
+                currently only available to University of Florida students with
+                a valid ufl email.
+              </div>
             </div>
 
             <div className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Username</FormLabel>
@@ -108,7 +109,11 @@ export default function SignUpForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="Password" placeholder="Enter password" {...field} />
+                      <Input
+                        type="Password"
+                        placeholder="Enter password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
