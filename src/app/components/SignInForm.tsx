@@ -60,8 +60,8 @@ export default function SignInForm({
   };
 
   return (
-    <div className="flex min-h-screen">
-      <div className="w-1/2 flex items-center justify-center px-12">
+    <div className="flex size-full">
+      <div className="w-1/2 flex justify-center px-12 py-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -74,11 +74,12 @@ export default function SignInForm({
                 Enter your details to sign in to your account
               </p>
             </div>
-
-            <div className="border p-2 rounded-md text-lg text-black/80">
-              <span className="text-[#F76129]">Note:</span> GrocerGO is
-              currently only available to University of Florida students with a
-              valid ufl email.
+            <div className="text-center flex flex-col items-center justify-center gap-4">
+              <div className="border p-2 rounded-md text-sm max-w-sm text-black/80 text-start">
+                <span className="text-[#F76129]">Note:</span> GrocerGO is
+                currently only available to <br /> University of Florida
+                students with a valid ufl email.
+              </div>
             </div>
 
             <div className="space-y-6">
@@ -142,6 +143,8 @@ export default function SignInForm({
           priority
         />
       </div>
+      {/* <div className="w-1/2 bg-red-500">box 1</div>
+      <div className="w-1/2 bg-blue-500">box 2</div> */}
     </div>
   );
 }

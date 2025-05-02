@@ -2,7 +2,7 @@ import React from 'react'
 import SignUpForm from "@/app/components/SignUpForm"
 function page() {
   return (
-    <div className='w-screen min-h-screen'>
+    <div className='size-full'>
       <SignUpForm />
       
     </div>

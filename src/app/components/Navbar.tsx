@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { useEffect } from "react";
-
-import SignOutButton from "./SignOutButton";
+import { ShoppingCart, MapPin } from "lucide-react";
 
 export default function Navbar() {
   const { data: session, isPending } = useSession();
@@ -16,16 +15,15 @@ export default function Navbar() {
   if (isPending) return null;
 
   return (
-    <nav className="flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
+    <nav className="sticky top-0 bg-white h-20 flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
       <Link href="/" className="flex items-center gap-2">
         <Image src={logo} alt="logo" width={50}></Image>
         <h1 className="text-base font-bold md:text-2xl">GrocerGO</h1>
       </Link>
       <div className="flex items-center gap-4">
-        <Link href="/order" className="text-base font-medium">
+        {/* <Link href="/order" className="text-base font-medium">
           Order
-        </Link>
-
+        </Link> */}
       </div>
       <div className="flex gap-2">
         {!session ? (
@@ -46,10 +44,7 @@ export default function Navbar() {
           </>
         ) : (
           <div className="flex items-center gap-2">
-            {/*
-              If the user has an `image` URL, render it as a circle
-              You can adjust width/height to taste (e.g. 32×32)
-            */}
+            {/* <p>Welcome {session.user.name}!</p>
             {session.user.image && (
               <Image
                 src={session.user.image}
@@ -58,10 +53,16 @@ export default function Navbar() {
                 height={32}
                 className="rounded-full"
               />
-            )}
+            )} */}
 
-            <span className="font-medium">{session.user.name}</span>
-            <SignOutButton />
+            <button className="px-4 py-2 flex items-center justify-center gap-2 border-2 bg-gray-100 rounded-full w-fit font-bold">
+              <MapPin />
+              <p>931 W University Ave.</p>
+            </button>
+            <button className="px-4 py-2 flex items-center justify-center gap-2 border-2 border-[#F76129] rounded-full w-fit">
+              <ShoppingCart />
+              <p>1</p>
+            </button>
           </div>
         )}
       </div>

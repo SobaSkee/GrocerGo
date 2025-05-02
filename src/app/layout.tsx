@@ -27,13 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-screen w-screen">
+    <html lang="en" className="h-screen w-screen m-0 p-0">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen h-screen m-0 p-0 flex flex-col`}
       >
 
           <Navbar />
-          {children}
+
+          <main className="size-full flex-1">
+            {children}
+          </main>
+          
           <Toaster/>
       </body>
     </html>

@@ -23,8 +23,7 @@ import { toast } from "sonner";
 
 const formSchema = z
   .object({
-    name: z
-      .string(),
+    name: z.string(),
 
     email: z
       .string()
@@ -49,31 +48,33 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
-  type FormSchema = z.infer<typeof formSchema>;
+type FormSchema = z.infer<typeof formSchema>;
 
-  const ValidationItem = ({
-    valid,
-    children,
-  }: {
-    valid: boolean;
-    children: string;
-  }) => (
-    <div className="flex items-center gap-2 text-sm">
-      {valid ? (
-        <Check className="h-4 w-4 text-green-500" />
-      ) : (
-        <X className="h-4 w-4 text-red-500" />
-      )}
-      <span className={valid ? "text-green-500" : "text-red-500"}>{children}</span>
-    </div>
-  );
+const ValidationItem = ({
+  valid,
+  children,
+}: {
+  valid: boolean;
+  children: string;
+}) => (
+  <div className="flex items-center gap-2 text-sm">
+    {valid ? (
+      <Check className="h-4 w-4 text-green-500" />
+    ) : (
+      <X className="h-4 w-4 text-red-500" />
+    )}
+    <span className={valid ? "text-green-500" : "text-red-500"}>
+      {children}
+    </span>
+  </div>
+);
 
 export default function SignUpForm() {
   const router = useRouter();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    mode: "onChange", 
+    mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
@@ -117,25 +118,26 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <div className="w-1/2 flex items-center justify-center px-16 py-12">
+    <div className="flex size-full">
+      <div className="w-1/2 flex justify-center px-12 py-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-full max-w-lg space-y-6"
           >
-            <div className="text-center flex flex-col items-center justify-center gap-4">
+            <div className="text-center">
               <h1 className="text-3xl font-bold">Sign up to GrocerGO</h1>
-              <div className="border p-2 rounded-md text-lg text-black/80">
+            </div>
+            <div className="text-center flex flex-col items-center justify-center gap-4">
+              <div className="border p-2 rounded-md text-sm max-w-sm text-black/80 text-start">
                 <span className="text-[#F76129]">Note:</span> GrocerGO is
-                currently only available to University of Florida students with
-                a valid ufl email.
+                currently only available to <br /> University of Florida
+                students with a valid ufl email.
               </div>
             </div>
 
-          {/* Field */}
+            {/* Field */}
             <div className="space-y-4">
-
               {/* Name */}
               <FormField
                 control={form.control}
@@ -183,9 +185,7 @@ export default function SignUpForm() {
                     <FormMessage />
 
                     {/* Live Check */}
-                    <div
-                      className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1"
-                    >
+                    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
                       <ValidationItem valid={pwCriteria.minLen}>
                         Minimum 8 characters
                       </ValidationItem>
@@ -224,10 +224,13 @@ export default function SignUpForm() {
               />
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full"
-              disabled={!Object.values(pwCriteria).every(Boolean) || isSubmitting}>
+              disabled={
+                !Object.values(pwCriteria).every(Boolean) || isSubmitting
+              }
+            >
               Sign Up
             </Button>
 
