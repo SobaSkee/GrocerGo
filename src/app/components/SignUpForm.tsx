@@ -17,13 +17,63 @@ import * as z from "zod";
 import Image from "next/image";
 import signUpImage from "@/../public/images/sign-up-image.png";
 import { signUp } from "@/lib/auth-client";
-import { formSchema } from "@/lib/auth-schema";
+import { Check, X } from "lucide-react";
+//import { formSchema } from "@/lib/auth-schema";
 import { toast } from "sonner";
+
+const formSchema = z
+  .object({
+    name: z
+      .string(),
+
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Invalid email")
+      .refine((val) => val.endsWith("@ufl.edu"), {
+        message: "Email must be a @ufl.edu address",
+      }),
+
+    password: z
+      .string()
+      .max(50)
+      .regex(/[a-z]/)
+      .regex(/[A-Z]/)
+      .regex(/[0-9]/)
+      .regex(/[^a-zA-Z0-9]/),
+    confirmPassword: z.string().min(1, "Password confirmation is required"),
+  })
+
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+  type FormSchema = z.infer<typeof formSchema>;
+
+  const ValidationItem = ({
+    valid,
+    children,
+  }: {
+    valid: boolean;
+    children: string;
+  }) => (
+    <div className="flex items-center gap-2 text-sm">
+      {valid ? (
+        <Check className="h-4 w-4 text-green-500" />
+      ) : (
+        <X className="h-4 w-4 text-red-500" />
+      )}
+      <span className={valid ? "text-green-500" : "text-red-500"}>{children}</span>
+    </div>
+  );
 
 export default function SignUpForm() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
+
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
+    mode: "onChange", 
     defaultValues: {
       name: "",
       email: "",
@@ -32,37 +82,36 @@ export default function SignUpForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const { email, password, name } = values;
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { isValid, isSubmitting },
+  } = form;
 
+  const password = watch("password") ?? "";
+  const pwCriteria = {
+    minLen: password.length >= 8,
+    lower: /[a-z]/.test(password),
+    upper: /[A-Z]/.test(password),
+    num: /[0-9]/.test(password),
+    special: /[^a-zA-Z0-9]/.test(password),
+  };
+
+  const onSubmit = async ({ name, email, password }: FormSchema) => {
     const avatarUrl =
-      `https://ui-avatars.com/api/` +
-      `?name=${encodeURIComponent(name)}` +
-      `&background=random` +
-      `&color=fff` +
-      `&bold=true` +
-      `&size=128`;
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}` +
+      `&background=random&color=fff&bold=true&size=128`;
 
-    // sign up with credentials
     signUp.email(
+      { email, password, name, image: avatarUrl },
       {
-        email,
-        password,
-        name,
-        image: avatarUrl,
-      },
-      {
-        onRequest: () => {
-          toast("Please wait...");
-        },
+        onRequest: () => toast("Please wait..."),
         onSuccess: () => {
-          toast("Sign-up successful!");
-          router.push("/order");
+          toast.success("Sign‑up successful!");
+          router.replace("/order");
         },
-        onError: (ctx) => {
-          toast.error(ctx.error.message);
-          form.setError("email", { message: ctx.error.message });
-        },
+        onError: (ctx) => toast.error(ctx.error.message),
       }
     );
   };
@@ -84,20 +133,25 @@ export default function SignUpForm() {
               </div>
             </div>
 
+          {/* Field */}
             <div className="space-y-4">
+
+              {/* Name */}
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="coolgator" {...field} />
+                      <Input placeholder="Albert Gator" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -111,6 +165,8 @@ export default function SignUpForm() {
                   </FormItem>
                 )}
               />
+
+              {/* Password */}
               <FormField
                 control={form.control}
                 name="password"
@@ -125,6 +181,27 @@ export default function SignUpForm() {
                       />
                     </FormControl>
                     <FormMessage />
+
+                    {/* Live Check */}
+                    <div
+                      className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1"
+                    >
+                      <ValidationItem valid={pwCriteria.minLen}>
+                        Minimum 8 characters
+                      </ValidationItem>
+                      <ValidationItem valid={pwCriteria.lower}>
+                        One lowercase letter
+                      </ValidationItem>
+                      <ValidationItem valid={pwCriteria.upper}>
+                        One uppercase letter
+                      </ValidationItem>
+                      <ValidationItem valid={pwCriteria.num}>
+                        One number
+                      </ValidationItem>
+                      <ValidationItem valid={pwCriteria.special}>
+                        One special character
+                      </ValidationItem>
+                    </div>
                   </FormItem>
                 )}
               />
@@ -147,7 +224,10 @@ export default function SignUpForm() {
               />
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={!Object.values(pwCriteria).every(Boolean) || isSubmitting}>
               Sign Up
             </Button>
 
