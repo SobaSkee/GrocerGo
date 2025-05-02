@@ -3,12 +3,11 @@
 import { motion } from "motion/react";
 import heroImage from "@/../public/images/landing-hero-image.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center">
-
-
       <div className="px-4 py-10 md:py-20">
         <div className="flex items-center justify-center">
           <div className="flex flex-col max-w-xl items-start justify-center gap-2">
@@ -60,23 +59,28 @@ export default function Home() {
               }}
               className="relative z-10 flex flex-wrap items-center justify-center gap-4"
             >
-              <button className="w-40 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+              <Link
+                href="/order"
+                className="w-fit transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              >
                 Start an order
-              </button>
-  
+              </Link>
             </motion.div>
           </div>
-          <motion.div initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.3,
-                delay: 0.5,
-              }}><Image width={500} src={heroImage} alt="hero image" /></motion.div>
-          
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 0.5,
+            }}
+          >
+            <Image width={500} src={heroImage} alt="hero image" />
+          </motion.div>
         </div>
 
         {/* <motion.div

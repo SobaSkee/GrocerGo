@@ -34,12 +34,22 @@ export default function SignUpForm() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const { email, password, name } = values;
+
+    const avatarUrl =
+      `https://ui-avatars.com/api/` +
+      `?name=${encodeURIComponent(name)}` +
+      `&background=random` +
+      `&color=fff` +
+      `&bold=true` +
+      `&size=128`;
+
     // sign up with credentials
     signUp.email(
       {
         email,
         password,
         name,
+        image: avatarUrl,
       },
       {
         onRequest: () => {
@@ -55,7 +65,6 @@ export default function SignUpForm() {
         },
       }
     );
-
   };
 
   return (
