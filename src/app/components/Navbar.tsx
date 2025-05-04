@@ -15,7 +15,7 @@ export default function Navbar() {
   if (isPending) return null;
 
   return (
-    <nav className="sticky top-0 bg-white h-20 flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
+    <nav className="sticky top-0 z-50 bg-white h-20 flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
       <Link href="/" className="flex items-center gap-2">
         <Image src={logo} alt="logo" width={50}></Image>
         <h1 className="text-base font-bold md:text-2xl">GrocerGO</h1>

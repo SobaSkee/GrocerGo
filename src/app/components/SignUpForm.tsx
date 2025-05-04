@@ -126,11 +126,10 @@ export default function SignUpForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full max-w-lg space-y-6"
+            className="w-full max-w-lg space-y-5"
           >
             <div className="text-center">
               <h1 className="text-3xl font-bold">Sign up to GrocerGO</h1>
-              <p>to start an order!</p>
             </div>
             <div className="text-center flex flex-col items-center justify-center gap-4">
               <div className="border p-2 rounded-md text-sm max-w-sm text-black/80 text-start">
