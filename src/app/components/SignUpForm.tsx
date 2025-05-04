@@ -84,10 +84,8 @@ export default function SignUpForm() {
   });
 
   const {
-    control,
-    handleSubmit,
     watch,
-    formState: { isValid, isSubmitting },
+    formState: { isSubmitting },
   } = form;
 
   const password = watch("password") ?? "";
@@ -107,12 +105,17 @@ export default function SignUpForm() {
     signUp.email(
       { email, password, name, image: avatarUrl },
       {
-        onRequest: () => toast("Please wait..."),
+        onRequest: (ctx) => {
+          toast("Please wait...");
+          return ctx;
+        },
         onSuccess: () => {
-          toast.success("Sign‑up successful!");
+          toast.success("Sign-up successful!");
           router.replace("/order");
         },
-        onError: (ctx) => toast.error(ctx.error.message),
+        onError: async (ctx) => {
+          toast.error(ctx.error.message);
+        },
       }
     );
   };
@@ -127,6 +130,7 @@ export default function SignUpForm() {
           >
             <div className="text-center">
               <h1 className="text-3xl font-bold">Sign up to GrocerGO</h1>
+              <p>to start an order!</p>
             </div>
             <div className="text-center flex flex-col items-center justify-center gap-4">
               <div className="border p-2 rounded-md text-sm max-w-sm text-black/80 text-start">

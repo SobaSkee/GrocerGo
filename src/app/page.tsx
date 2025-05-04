@@ -41,7 +41,7 @@ export default function Home() {
                 duration: 0.3,
                 delay: 0.8,
               }}
-              className="relative z-10 max-w-md py-4 text-lg font-normal text-[#031E54]/80 dark:text-neutral-400"
+              className="relative z-10 max-w-md py-4 text-lg font-normal text-black/80 dark:text-neutral-400"
             >
               GrocerGO deliveries are made by students for students. No extra
               fees, just convenient shopping.
@@ -61,7 +61,7 @@ export default function Home() {
             >
               <Link
                 href="/order"
-                className="w-fit transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                className="text-xl transform rounded-lg bg-[#F76129] px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F76129]/90 dark:bg-white dark:text-black dark:hover:bg-gray-200"
               >
                 Start an order
               </Link>

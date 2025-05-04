@@ -30,16 +30,16 @@ export default function Navbar() {
           <>
             <p>User is not authenticated</p>
             <Link
-              href="/sign-in"
-              className="w-fit transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
-            >
-              Login
-            </Link>
+                href="/sign-up"
+                className="transform rounded-lg bg-[#F76129] px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F76129]/90 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              >
+                Sign Up
+              </Link>
             <Link
-              href="/sign-up"
+              href="/sign-in"
               className="w-fit transform rounded-lg px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-200/50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              Sign Up
+              Sign In
             </Link>
           </>
         ) : (
