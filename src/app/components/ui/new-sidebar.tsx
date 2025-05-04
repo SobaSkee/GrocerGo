@@ -50,7 +50,7 @@ export default function Sidebar() {
       {/* Toggle button */}
       <button
         onClick={toggleSidebar}
-        className=" bg-[#F76129] absolute top-6 -right-3 w-6 rounded-full p-1 text-white shadow-md hover:bg-[#F76129]/80"
+        className=" bg-[#F76129] absolute top-6 -right-3 w-6 rounded-full p-1 text-white shadow-md hover:bg-[var(--secondary-hover)]"
       >
         {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
       </button>
@@ -76,10 +76,10 @@ export default function Sidebar() {
 
         {!collapsed && (
           <div className="ml-3 overflow-hidden">
-            <p className="font-medium text-gray-800 truncate">
+            <p className="font-medium text-[var(--primary-text)] truncate">
               {session?.user.name}
             </p>
-            <p className="text-sm text-gray-500 truncate">
+            <p className="text-sm text-[var(--primary-text-light)] truncate">
               {session?.user.email}
             </p>
           </div>
@@ -101,12 +101,12 @@ export default function Sidebar() {
               className={`
                 flex items-center rounded-lg p-3 transition
                 ${isActive
-                  ? "bg-[#F76129] text-white"
-                  : "text-gray-600 hover:bg-red-100"}
+                  ? "bg-[var(--primary)] text-white"
+                  : "text-[var(--primary)] hover:bg-[var(--primary-hover)]"}
                 ${collapsed ? "justify-center" : ""}
               `}
             >
-              <div className={isActive ? "text-white" : "text-gray-500"}>
+              <div className={isActive ? "text-white" : "text-[var(--primary)]"}>
                 {item.icon}
               </div>
               {!collapsed && <span className="ml-3">{item.label}</span>}
@@ -119,7 +119,7 @@ export default function Sidebar() {
       <div className="p-4 border-t">
         <button
           onClick={handleSignOut}
-          className={`flex items-center p-3 text-red-500 hover:bg-red-50 rounded-lg w-full ${
+          className={`flex items-center p-3 text-[var(--primary)] hover:bg-[var(--primary-hover)] rounded-lg w-full ${
             collapsed ? "justify-center" : ""
           }`}
         >

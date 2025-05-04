@@ -11,7 +11,7 @@ export default function Home() {
       <div className="px-4 py-10 md:py-20">
         <div className="flex items-center justify-center">
           <div className="flex flex-col max-w-xl items-start justify-center gap-2">
-            <h1 className="relative z-10 max-w-4xl text-2xl font-bold text-[#031E54] md:text-4xl lg:text-7xl dark:text-slate-300">
+            <h1 className="relative z-10 max-w-4xl text-2xl font-bold text-[var(--primary-text)] md:text-4xl lg:text-7xl dark:text-slate-300">
               {"Affordable Groceries Delivered."
                 .split(" ")
                 .map((word, index) => (
@@ -41,7 +41,7 @@ export default function Home() {
                 duration: 0.3,
                 delay: 0.8,
               }}
-              className="relative z-10 max-w-md py-4 text-lg font-normal text-black/80 dark:text-neutral-400"
+              className="relative z-10 max-w-md py-4 text-lg font-normal text-[var(--primary-text-light)] dark:text-neutral-400"
             >
               GrocerGO deliveries are made by students for students. No extra
               fees, just convenient shopping.

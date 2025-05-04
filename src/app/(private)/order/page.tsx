@@ -34,8 +34,8 @@ export default function OrderPage() {
   const title = LABELS[category] || category;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">{title}</h1>
+    <div className="px-4">
+      <h1 className="text-2xl text-[var(--primary-text)] font-bold mb-4">{title}</h1>
       <TabComponent />
     </div>
   );

@@ -17,8 +17,8 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white h-20 flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
       <Link href="/" className="flex items-center gap-2">
-        <Image src={logo} alt="logo" width={50}></Image>
-        <h1 className="text-base font-bold md:text-2xl">GrocerGO</h1>
+        
+        <h1 className="flex items-center justify-center text-base text-[var(--primary-text)] font-bold md:text-2xl">Grocer<span><Image className="mx-1" src={logo} alt="logo" width={35}></Image></span>O</h1>
       </Link>
       <div className="flex items-center gap-4">
         {/* <Link href="/order" className="text-base font-medium">
@@ -37,7 +37,7 @@ export default function Navbar() {
               </Link>
             <Link
               href="/sign-in"
-              className="w-fit transform rounded-lg px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-200/50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="w-fit transform rounded-lg px-6 py-2 font-medium text-[var(--primary-text)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-200/50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               Sign In
             </Link>
@@ -55,11 +55,11 @@ export default function Navbar() {
               />
             )} */}
 
-            <button className="px-4 py-2 flex items-center justify-center gap-2 border-2 bg-gray-100 rounded-full w-fit font-bold">
+            <button className="px-4 py-2 flex items-center justify-center gap-2 border-2 bg-gray-100 text-[var(--primary-text)] rounded-full w-fit font-bold">
               <MapPin />
               <p>931 W University Ave.</p>
             </button>
-            <button className="px-4 py-2 flex items-center justify-center gap-2 border-2 border-[#F76129] rounded-full w-fit">
+            <button className="px-4 py-2 flex items-center justify-center gap-2 text-[var(--primary-text)] border-2 border-[var(--primary)] rounded-full w-fit hover:bg-[var(--primary-hover)]">
               <ShoppingCart />
               <p>1</p>
             </button>
