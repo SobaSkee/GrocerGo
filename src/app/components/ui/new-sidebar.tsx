@@ -8,28 +8,37 @@ import {
   Settings,
   ChevronRight,
   ChevronLeft,
+  LogOut,
 } from "lucide-react";
 import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
 import { UserRound } from "lucide-react";
-import SignOutButton from "@/app/components/SignOutButton";
+// import SignOutButton from "@/app/components/SignOutButton";
+import { useRouter } from "next/navigation";
+import { signOut } from "@/lib/auth-client";
+import Link from "next/link";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const { data: session } = useSession();
   const [activeItem, setActiveItem] = useState(0);
 
+  const router = useRouter();
+  const handleSignOut = async () => {
+    await signOut(); // redirect to home after sign out
+    router.push("/");
+  };
+
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
 
   const menuItems = [
-    { icon: <Store size={24} />, label: "My Stores" },
-    { icon: <ShoppingBag size={24} />, label: "My Orders" },
-    { icon: <Heart size={24} />, label: "Favorites" },
-    { icon: <Clock size={24} />, label: "Order History" },
-    { icon: <Settings size={24} />, label: "Settings" },
-
+    { icon: <Store size={24} />, label: "My Stores", filter: "stores" },
+    { icon: <ShoppingBag size={24} />, label: "My Orders", filter: "orders" },
+    { icon: <Heart size={24} />, label: "Favorites", filter: "favorites" },
+    { icon: <Clock size={24} />, label: "Order History", filter: "history" },
+    { icon: <Settings size={24} />, label: "Settings", filter: "settings" },
   ];
 
   return (
@@ -67,8 +76,12 @@ export default function Sidebar() {
 
         {!collapsed && (
           <div className="ml-3 overflow-hidden">
-            <p className="font-medium text-gray-800 truncate">{session?.user.name}</p>
-            <p className="text-sm text-gray-500 truncate">{session?.user.email}</p>
+            <p className="font-medium text-gray-800 truncate">
+              {session?.user.name}
+            </p>
+            <p className="text-sm text-gray-500 truncate">
+              {session?.user.email}
+            </p>
           </div>
         )}
       </div>
@@ -78,37 +91,42 @@ export default function Sidebar() {
         {menuItems.map((item, index) => {
           const isActive = activeItem === index;
           return (
-            <button
-              key={index}
-              className={`flex items-center w-full p-3 rounded-lg ${
-                isActive
-                  ? "bg-[#F76129] text-white"
-                  : "text-gray-600 hover:bg-red-200"
-              } ${collapsed ? "justify-center" : ""}`}
+            <Link
+              key={item.filter}
+              href={{
+                pathname: "/order",
+                query: { category: item.filter },
+              }}
               onClick={() => setActiveItem(index)}
+              className={`
+                flex items-center rounded-lg p-3 transition
+                ${isActive
+                  ? "bg-[#F76129] text-white"
+                  : "text-gray-600 hover:bg-red-100"}
+                ${collapsed ? "justify-center" : ""}
+              `}
             >
-              <div className={`${isActive ? "text-white" : "text-gray-500"}`}>
+              <div className={isActive ? "text-white" : "text-gray-500"}>
                 {item.icon}
               </div>
-              {!collapsed && (
-                <span className="ml-3 font-medium">{item.label}</span>
-              )}
-            </button>
+              {!collapsed && <span className="ml-3">{item.label}</span>}
+            </Link>
           );
         })}
       </div>
 
       {/* Logout button */}
       <div className="p-4 border-t">
-        {/* <button
+        <button
+          onClick={handleSignOut}
           className={`flex items-center p-3 text-red-500 hover:bg-red-50 rounded-lg w-full ${
             collapsed ? "justify-center" : ""
           }`}
         >
           <LogOut size={24} />
           {!collapsed && <span className="ml-3 font-medium">Logout</span>}
-        </button> */}
-        <SignOutButton />
+        </button>
+        {/* <SignOutButton /> */}
       </div>
     </div>
   );

@@ -1,21 +1,42 @@
-import React from 'react'
+// app/(private)/order/page.tsx
+"use client";
 
-function page() {
+import React from "react";
+import { useSearchParams } from "next/navigation";
+import StoresTab from "@/app/(private)/order/order-tabs/StoresTab";
+import OrdersTab from "@/app/(private)/order/order-tabs/OrdersTab";
+import FavsTab from "@/app/(private)/order/order-tabs/FavsTab";
+import HistoryTab from "@/app/(private)/order/order-tabs/HistoryTab";
+import SettingsTab from "@/app/(private)/order/order-tabs/SettingsTab";
+
+const TAB_COMPONENTS: Record<string, React.ComponentType> = {
+  stores: StoresTab,
+  orders: OrdersTab,
+  favorites: FavsTab,
+  history: HistoryTab,
+  settings: SettingsTab,
+};
+
+const LABELS: Record<string, string> = {
+  stores: "My Stores",
+  orders: "My Orders",
+  favorites: "Favorites",
+  history: "Order History",
+  settings: "Settings",
+};
+
+export default function OrderPage() {
+  const params = useSearchParams();
+  const category = params.get("category") ?? "stores";
+
+  const TabComponent =
+    TAB_COMPONENTS[category] || (() => <p>Unknown tab: {category}</p>);
+  const title = LABELS[category] || category;
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Stores</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="p-6 rounded-lg border bg-card">
-                <h2 className="font-semibold mb-2">Card {i + 1}</h2>
-                <p className="text-sm text-muted-foreground">
-                  This is some placeholder content for the dashboard.
-                </p>
-              </div>
-            ))}
-          </div>
+      <h1 className="text-2xl font-bold mb-4">{title}</h1>
+      <TabComponent />
     </div>
-  )
+  );
 }
-
-export default page
