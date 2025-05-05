@@ -21,6 +21,7 @@ import {
   FormLabel,
 } from "@/app/components/ui/form";
 
+
 export default function SignInForm({
   className,
   ...props
@@ -32,7 +33,11 @@ export default function SignInForm({
       email: "",
       password: "",
     },
+    mode: "onChange"
   });
+
+  const {formState: {isSubmitting, isValid}} = form;
+  const disabled = !isValid || isSubmitting;
 
   const onSubmit = (values: z.infer<typeof signInFormSchema>) => {
     const { email, password } = values;
@@ -93,7 +98,7 @@ export default function SignInForm({
                       <Input
                         {...field}
                         type="email"
-                        placeholder="example@ufl.edu"
+                        placeholder="your@ufl.edu"
                       />
                     </FormControl>
                     <FormMessage />
@@ -111,7 +116,7 @@ export default function SignInForm({
                       <Input
                         {...field}
                         type="password"
-                        placeholder="Password"
+                        placeholder="Enter password"
                       />
                     </FormControl>
                     <FormMessage />
@@ -119,7 +124,7 @@ export default function SignInForm({
                 )}
               />
 
-              <Button type="submit" className="w-full">
+              <Button type="submit" disabled={disabled} className="w-full disabled:opacity-50 disabled:cursor-not-allowed" >
                 Sign In
               </Button>
             </div>

@@ -18,37 +18,10 @@ import Image from "next/image";
 import signUpImage from "@/../public/images/sign-up-image.png";
 import { signUp } from "@/lib/auth-client";
 import { Check, X } from "lucide-react";
-import { formSchema } from "@/lib/auth-schema";
+import { signUpFormSchema } from "@/lib/auth-schema";
 import { toast } from "sonner";
 
-// const formSchema = z
-//   .object({
-//     name: z.string(),
-
-//     email: z
-//       .string()
-//       .min(1, "Email is required")
-//       .email("Invalid email")
-//       .refine((val) => val.endsWith("@ufl.edu"), {
-//         message: "Email must be a @ufl.edu address",
-//       }),
-
-//     password: z
-//       .string()
-//       .max(50)
-//       .regex(/[a-z]/)
-//       .regex(/[A-Z]/)
-//       .regex(/[0-9]/)
-//       .regex(/[^a-zA-Z0-9]/),
-//     confirmPassword: z.string().min(1, "Password confirmation is required"),
-//   })
-
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmPassword"],
-//   });
-
-type FormSchema = z.infer<typeof formSchema>;
+type FormSchema = z.infer<typeof signUpFormSchema>;
 
 const ValidationItem = ({
   valid,
@@ -73,7 +46,7 @@ export default function SignUpForm() {
   const router = useRouter();
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signUpFormSchema),
     mode: "onChange",
     defaultValues: {
       name: "",
