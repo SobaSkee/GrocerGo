@@ -43,7 +43,7 @@ export default function Home() {
               }}
               className="relative z-10 max-w-md py-4 text-lg font-normal text-[var(--primary-text-light)] dark:text-neutral-400"
             >
-              GrocerGO deliveries are made by students for students. No extra
+              GrocerGO deliveries are made for students by students. No extra
               fees, just convenient shopping.
             </motion.p>
             <motion.div

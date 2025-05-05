@@ -1,5 +1,5 @@
 "use client";
-import logo from "@/../public/images/grocer-go-logo.svg";
+import logo2 from "@/../public/images/grocer-go-logo-2.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
@@ -16,9 +16,10 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white h-20 flex w-full items-center justify-between border-b border-neutral-200 px-8 py-4 dark:border-neutral-800">
-      <Link href="/" className="flex items-center gap-2">
+      <Link href="/" className="flex items-center -gap-1 justify-center">
         
-        <h1 className="flex items-center justify-center text-base text-[var(--primary-text)] font-bold md:text-2xl">Grocer<span><Image className="mx-1" src={logo} alt="logo" width={35}></Image></span>O</h1>
+        <h1 className="flex items-center justify-center text-base text-[var(--primary-text)] font-bold md:text-2xl">Grocer</h1>
+        <Image className="ml-1" src={logo2} alt="logo" width={60}></Image>
       </Link>
       <div className="flex items-center gap-4">
         {/* <Link href="/order" className="text-base font-medium">
