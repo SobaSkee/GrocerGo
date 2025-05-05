@@ -3,6 +3,7 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import StoresTab from "@/app/(private)/order/order-tabs/StoresTab";
 import OrdersTab from "@/app/(private)/order/order-tabs/OrdersTab";
 import FavsTab from "@/app/(private)/order/order-tabs/FavsTab";
@@ -26,6 +27,16 @@ const LABELS: Record<string, string> = {
 };
 
 export default function OrderPage() {
+  return (
+    <div className="px-4">
+      <Suspense fallback={<p>Loading...</p>}>
+        <OrderContent />
+      </Suspense>
+    </div>
+  );
+}
+
+function OrderContent() {
   const params = useSearchParams();
   const category = params.get("category") ?? "stores";
 
@@ -34,9 +45,11 @@ export default function OrderPage() {
   const title = LABELS[category] || category;
 
   return (
-    <div className="px-4">
-      <h1 className="text-2xl text-[var(--primary-text)] font-bold mb-4">{title}</h1>
+    <>
+      <h1 className="text-2xl text-[var(--primary-text)] font-bold mb-4">
+        {title}
+      </h1>
       <TabComponent />
-    </div>
+    </>
   );
 }
