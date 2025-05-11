@@ -1,6 +1,7 @@
 // app/(private)/order/components/StoreCard.tsx
 import Image from "next/image";
 import { MapPin, Clock } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export interface Store {
   id: number;
@@ -12,6 +13,13 @@ export interface Store {
 }
 
 export default function StoreCard({ store }: { store: Store }) {
+  const router = useRouter();
+
+  const handleShopNow = () => {
+    const storeSlug = store.name.toLowerCase().split(' ')[0];
+    router.push(`/order/${storeSlug}`);
+  };
+
   return (
     <div className="flex flex-col justify-between bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4">
       {/* Logo & Name */}
@@ -34,7 +42,7 @@ export default function StoreCard({ store }: { store: Store }) {
         <p className=" text-sm text-[var(--primary-text-light)] line-clamp-2">{store.address}</p>
       </div>
     
-        {/* Hours */}
+      {/* Hours */}
       <div className="flex items-center gap-2 mt-2">
         <Clock className="w-4 h-4 flex-shrink-0 text-[var(--primary-text-light)]" />
         <p className=" text-sm text-[var(--primary-text-light)] line-clamp-2">{store.hours}</p>
@@ -45,7 +53,10 @@ export default function StoreCard({ store }: { store: Store }) {
         <span className="text-sm font-medium text-[var(--primary)]">
           {store.distance}
         </span>
-        <button className="px-4 py-1 font-medium text-white bg-[var(--primary)] rounded-md hover:bg-[var(--secondary-hover)] transition">
+        <button 
+          onClick={handleShopNow}
+          className="px-4 py-1 font-medium text-white bg-[var(--primary)] rounded-md hover:bg-[var(--secondary-hover)] transition"
+        >
           Shop Now
         </button>
       </div>

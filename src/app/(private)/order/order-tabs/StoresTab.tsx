@@ -12,10 +12,10 @@ const stores: Store[] = [
   },
   {
     id: 2,
-    name: "Publix at Westgate Shopping Center",
+    name: "Walmart at Butler Plaza",
     address: "3315 W University Ave, Gainesville, FL 32607",
     hours: "7:00 AM - 10:00 PM",
-    distance: "2.5 miles", // example distance in the future calculate based on user location from ip
+    distance: "3 miles", 
     logo: "/images/store-logos/publix-logo.webp",
   },
   {
@@ -23,7 +23,7 @@ const stores: Store[] = [
     name: "Publix at Westgate Shopping Center",
     address: "3315 W University Ave, Gainesville, FL 32607",
     hours: "7:00 AM - 10:00 PM",
-    distance: "2.5 miles", // example distance in the future calculate based on user location from ip
+    distance: "2.5 miles", 
     logo: "/images/store-logos/publix-logo.webp",
   },
   {
@@ -31,7 +31,7 @@ const stores: Store[] = [
     name: "Publix at Westgate Shopping Center",
     address: "3315 W University Ave, Gainesville, FL 32607",
     hours: "7:00 AM - 10:00 PM",
-    distance: "2.5 miles", // example distance in the future calculate based on user location from ip
+    distance: "2.5 miles", 
     logo: "/images/store-logos/publix-logo.webp",
   },
 ];
