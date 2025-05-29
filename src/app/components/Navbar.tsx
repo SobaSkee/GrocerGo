@@ -3,7 +3,6 @@ import logo2 from "@/../public/images/grocer-go-logo-2.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
-import { useEffect } from "react";
 import { ShoppingCart, MapPin } from "lucide-react";
 
 export default function Navbar() {
