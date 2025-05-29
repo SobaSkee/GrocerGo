@@ -9,9 +9,9 @@ import { ShoppingCart, MapPin } from "lucide-react";
 export default function Navbar() {
   const { data: session, isPending } = useSession();
 
-  useEffect(() => {
-    console.log("Session data:", session);
-  }, [session]);
+  // useEffect(() => {
+  //   console.log("Session data:", session);
+  // }, [session]);
   if (isPending) return null;
 
   return (
