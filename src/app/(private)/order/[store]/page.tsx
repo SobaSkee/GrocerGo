@@ -1,11 +1,5 @@
 import { redirect } from 'next/navigation';
 
-interface StorePageProps {
-  params: {
-    store: string;
-  };
-}
-
-export default function StorePage({ params }: StorePageProps) {
+export default async function StorePage({ params }: { params: { store: string } }) {
   redirect(`/order/${params.store}/storefront`);
-} 
+}
