@@ -1,6 +1,10 @@
-export default async function StorefrontPage({ params }: { params: { store: string } }) {
-  const params_identifier = await params;
-  const storeName = params_identifier.store.charAt(0).toUpperCase() + params_identifier.store.slice(1);
+'use client';
+
+import { useParams } from 'next/navigation';
+
+export default function StorefrontPage() {
+  const params = useParams();
+  const storeName = (params.store as string).charAt(0).toUpperCase() + (params.store as string).slice(1);
 
   return (
     <div className="container mx-auto px-4 py-8">
